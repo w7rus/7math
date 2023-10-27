@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <RootNamespace>_7math</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Authors>w7rus</Authors>
+        <Description>Partial port of Three.js onto C# (with edits)
+Contains: Vector3, Quaternion, Matrix3, Matrix4, Euler, Plane, Triangle</Description>
+        <TargetFramework>net7.0</TargetFramework>
+        <Title>7math</Title>
+        <PackageId>w7rus.7math</PackageId>
+        <PackageProjectUrl>https://github.com/w7rus/7math/</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/w7rus/7math/</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <Version>1.0.3</Version>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="README.md" Pack="true" PackagePath="\"/>
+    </ItemGroup>
+
+</Project>
