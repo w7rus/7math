@@ -446,9 +446,9 @@ public struct Vector3 : IEquatable<Vector3>, IFormattable
 
     public readonly override string ToString() => ToString("G", CultureInfo.CurrentCulture);
 
-    public readonly string ToString([StringSyntax(StringSyntaxAttribute.NumericFormat)] string format) => ToString(format, CultureInfo.CurrentCulture);
+    public readonly string ToString(string format) => ToString(format, CultureInfo.CurrentCulture);
 
-    public readonly string ToString([StringSyntax(StringSyntaxAttribute.NumericFormat)] string format, IFormatProvider formatProvider)
+    public readonly string ToString(string format, IFormatProvider formatProvider)
     {
         var separator = NumberFormatInfo.GetInstance(formatProvider).NumberGroupSeparator;
 

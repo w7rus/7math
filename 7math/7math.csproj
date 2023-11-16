@@ -9,7 +9,6 @@
         <Authors>w7rus</Authors>
         <Description>Partial port of Three.js onto C# (with edits)
 Contains: Vector3, Quaternion, Matrix3, Matrix4, Euler, Plane, Triangle</Description>
-        <TargetFramework>net7.0</TargetFramework>
         <Title>7math</Title>
         <PackageId>w7rus.7math</PackageId>
         <PackageProjectUrl>https://github.com/w7rus/7math/</PackageProjectUrl>
@@ -17,7 +16,9 @@ Contains: Vector3, Quaternion, Matrix3, Matrix4, Euler, Plane, Triangle</Descrip
         <RepositoryType>git</RepositoryType>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <Version>1.0.3</Version>
+        <Version>1.0.4</Version>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <LangVersion>default</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
