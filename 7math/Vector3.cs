@@ -6,11 +6,11 @@ namespace _7math;
 
 public struct Vector3 : IEquatable<Vector3>, IFormattable
 {
-    public float X { get; set; }
-    public float Y { get; set; }
-    public float Z { get; set; }
+    public double X { get; set; }
+    public double Y { get; set; }
+    public double Z { get; set; }
 
-    public Vector3(float x = 0, float y = 0, float z = 0)
+    public Vector3(double x = 0, double y = 0, double z = 0)
     {
         X = x;
         Y = y;
@@ -40,7 +40,7 @@ public struct Vector3 : IEquatable<Vector3>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Vector3 Set(float x = 0, float y = 0, float z = 0)
+    public Vector3 Set(double x = 0, double y = 0, double z = 0)
     {
         X = x;
         Y = y;
@@ -60,7 +60,7 @@ public struct Vector3 : IEquatable<Vector3>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Vector3 AddScalar(float scalar)
+    public Vector3 AddScalar(double scalar)
     {
         X += scalar;
         Y += scalar;
@@ -70,7 +70,7 @@ public struct Vector3 : IEquatable<Vector3>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Vector3 ApplyAxisAngle(Vector3 vec3, float theta) => ApplyQuaternion(new Quaternion().SetFromAxisAngle(vec3, theta));
+    public Vector3 ApplyAxisAngle(Vector3 vec3, double theta) => ApplyQuaternion(new Quaternion().SetFromAxisAngle(vec3, theta));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Vector3 ApplyEuler(Euler eul) => ApplyQuaternion(new Quaternion().SetFromEuler(eul));
@@ -129,39 +129,39 @@ public struct Vector3 : IEquatable<Vector3>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public float AngleTo(Vector3 vec3)
+    public double AngleTo(Vector3 vec3)
     {
         var denominator = vec3.LengthSquared();
 
-        return denominator == 0 ? MathF.PI / 2 : MathF.Acos(Helpers.Clamp(Dot(vec3) / denominator, -1, 1));
+        return denominator == 0 ? Math.PI / 2 : Math.Acos(Helpers.Clamp(Dot(vec3) / denominator, -1, 1));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Vector3 Clamp(Vector3 min, Vector3 max)
     {
-        X = MathF.Max(min.X, MathF.Max(max.X, X));
-        Y = MathF.Max(min.Y, MathF.Max(max.Y, Y));
-        Z = MathF.Max(min.Z, MathF.Max(max.Z, Z));
+        X = Math.Max(min.X, Math.Max(max.X, X));
+        Y = Math.Max(min.Y, Math.Max(max.Y, Y));
+        Z = Math.Max(min.Z, Math.Max(max.Z, Z));
 
         return this;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Vector3 ClampLength(float min, float max)
+    public Vector3 ClampLength(double min, double max)
     {
         var length = Length();
 
-        DivideScalar(length == 0 ? 1 : length).MultiplyScalar(MathF.Max(min, MathF.Min(max, length)));
+        DivideScalar(length == 0 ? 1 : length).MultiplyScalar(Math.Max(min, Math.Min(max, length)));
 
         return this;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Vector3 ClampScalar(float min, float max)
+    public Vector3 ClampScalar(double min, double max)
     {
-        X = MathF.Max(min, MathF.Max(max, X));
-        Y = MathF.Max(min, MathF.Max(max, Y));
-        Z = MathF.Max(min, MathF.Max(max, Z));
+        X = Math.Max(min, Math.Max(max, X));
+        Y = Math.Max(min, Math.Max(max, Y));
+        Z = Math.Max(min, Math.Max(max, Z));
 
         return this;
     }
@@ -181,13 +181,13 @@ public struct Vector3 : IEquatable<Vector3>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public float DistanceTo(Vector3 vec3)
+    public double DistanceTo(Vector3 vec3)
     {
-        return MathF.Sqrt(DistanceToSquared(vec3));
+        return Math.Sqrt(DistanceToSquared(vec3));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public float DistanceToSquared(Vector3 vec3)
+    public double DistanceToSquared(Vector3 vec3)
     {
         var x = X - vec3.X;
         var y = Y - vec3.Y;
@@ -207,23 +207,23 @@ public struct Vector3 : IEquatable<Vector3>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Vector3 DivideScalar(float scalar) => MultiplyScalar(1 / scalar);
+    public Vector3 DivideScalar(double scalar) => MultiplyScalar(1 / scalar);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public float Dot(Vector3 vec3) => X * vec3.X + Y * vec3.Y + Z * vec3.Z;
+    public double Dot(Vector3 vec3) => X * vec3.X + Y * vec3.Y + Z * vec3.Z;
 
     public bool Equals(Vector3 other) => X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z);
 
     public override bool Equals(object obj) => obj is Vector3 other && Equals(other);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public float Length() => MathF.Sqrt(LengthSquared());
+    public double Length() => Math.Sqrt(LengthSquared());
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public float LengthSquared() => Dot(this);
+    public double LengthSquared() => Dot(this);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Vector3 Lerp(Vector3 vec3, float alpha)
+    public Vector3 Lerp(Vector3 vec3, double alpha)
     {
         X += (vec3.X - X) * alpha;
         Y += (vec3.Y - Y) * alpha;
@@ -235,9 +235,9 @@ public struct Vector3 : IEquatable<Vector3>, IFormattable
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Vector3 Max(Vector3 vec3)
     {
-        X = MathF.Max(vec3.X, X);
-        Y = MathF.Max(vec3.Y, Y);
-        Z = MathF.Max(vec3.Z, Z);
+        X = Math.Max(vec3.X, X);
+        Y = Math.Max(vec3.Y, Y);
+        Z = Math.Max(vec3.Z, Z);
 
         return this;
     }
@@ -245,9 +245,9 @@ public struct Vector3 : IEquatable<Vector3>, IFormattable
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Vector3 Min(Vector3 vec3)
     {
-        X = MathF.Min(vec3.X, X);
-        Y = MathF.Min(vec3.Y, Y);
-        Z = MathF.Min(vec3.Z, Z);
+        X = Math.Min(vec3.X, X);
+        Y = Math.Min(vec3.Y, Y);
+        Z = Math.Min(vec3.Z, Z);
 
         return this;
     }
@@ -263,7 +263,7 @@ public struct Vector3 : IEquatable<Vector3>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Vector3 MultiplyScalar(float scalar)
+    public Vector3 MultiplyScalar(double scalar)
     {
         X *= scalar;
         Y *= scalar;
@@ -326,7 +326,7 @@ public struct Vector3 : IEquatable<Vector3>, IFormattable
     public Vector3 Reflect(Vector3 normal) => Subtract(normal.MultiplyScalar(2 * Dot(normal)));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Vector3 SetFromArray(float[] arr, int offset = 0)
+    public Vector3 SetFromArray(double[] arr, int offset = 0)
     {
         X = arr[offset];
         Y = arr[offset + 1];
@@ -374,10 +374,10 @@ public struct Vector3 : IEquatable<Vector3>, IFormattable
     // }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Vector3 ScaleTo(float length) => Normalize().MultiplyScalar(length);
+    public Vector3 ScaleTo(double length) => Normalize().MultiplyScalar(length);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Vector3 SetFromScalar(float scalar)
+    public Vector3 SetFromScalar(double scalar)
     {
         X = scalar;
         Y = scalar;
@@ -397,7 +397,7 @@ public struct Vector3 : IEquatable<Vector3>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Vector3 SubtractScalar(float scalar)
+    public Vector3 SubtractScalar(double scalar)
     {
         X -= scalar;
         Y -= scalar;
@@ -407,7 +407,7 @@ public struct Vector3 : IEquatable<Vector3>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public float[] ToArray() => new[] { X, Y, Z };
+    public double[] ToArray() => new[] { X, Y, Z };
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Vector3 TransformDirection(Matrix4 mat4)
@@ -440,7 +440,7 @@ public struct Vector3 : IEquatable<Vector3>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public bool IsFinite() => float.IsFinite(X) && float.IsFinite(Y) && float.IsFinite(Z);
+    public bool IsFinite() => double.IsFinite(X) && double.IsFinite(Y) && double.IsFinite(Z);
 
     public override int GetHashCode() => HashCode.Combine(X, Y, Z);
 

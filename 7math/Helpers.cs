@@ -6,5 +6,5 @@ namespace _7math;
 internal static class Helpers
 {
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static float Clamp(float value, float min, float max) => MathF.Max(min, MathF.Min(max, value));
+    internal static double Clamp(double value, double min, double max) => Math.Max(min, Math.Min(max, value));
 }

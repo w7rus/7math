@@ -6,10 +6,10 @@ namespace _7math;
 
 public struct Matrix3 : IEquatable<Matrix3>, IFormattable
 {
-    public float[] Elements { get; set; }
+    public double[] Elements { get; set; }
 
     public Matrix3() =>
-        Elements = new float[]
+        Elements = new double[]
         {
             1, 0, 0,
             0, 1, 0,
@@ -18,15 +18,15 @@ public struct Matrix3 : IEquatable<Matrix3>, IFormattable
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Matrix3 Set(
-        float n11 = 0,
-        float n12 = 0,
-        float n13 = 0,
-        float n21 = 0,
-        float n22 = 0,
-        float n23 = 0,
-        float n31 = 0,
-        float n32 = 0,
-        float n33 = 0
+        double n11 = 0,
+        double n12 = 0,
+        double n13 = 0,
+        double n21 = 0,
+        double n22 = 0,
+        double n23 = 0,
+        double n31 = 0,
+        double n32 = 0,
+        double n33 = 0
     )
     {
         Elements[0] = n11;
@@ -49,7 +49,7 @@ public struct Matrix3 : IEquatable<Matrix3>, IFormattable
     public Matrix3 Copy(Matrix3 mat3) => SetFromArray(mat3.Elements);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Matrix3 SetFromArray(float[] arr, int offset = 0)
+    public Matrix3 SetFromArray(double[] arr, int offset = 0)
     {
         for (var i = 0; i < 8; i++) Elements[i] = arr[i + offset];
 
@@ -57,7 +57,7 @@ public struct Matrix3 : IEquatable<Matrix3>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public float[] ToArray() => (float[])Elements.Clone();
+    public double[] ToArray() => (double[])Elements.Clone();
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Matrix3 SetIdentity() =>
@@ -154,7 +154,7 @@ public struct Matrix3 : IEquatable<Matrix3>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Matrix3 MultiplyScalar(float scalar)
+    public Matrix3 MultiplyScalar(double scalar)
     {
         Elements[0] *= scalar;
         Elements[3] *= scalar;
@@ -170,7 +170,7 @@ public struct Matrix3 : IEquatable<Matrix3>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public float Determinant()
+    public double Determinant()
     {
         var a = Elements[0];
         var b = Elements[1];
@@ -242,7 +242,7 @@ public struct Matrix3 : IEquatable<Matrix3>, IFormattable
     public Matrix3 GetNormalMatrix(Matrix4 mat4) => SetFromMatrix4(mat4).Invert().Transpose();
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Matrix3 MakeScale(float x, float y) =>
+    public Matrix3 MakeScale(double x, double y) =>
         Set(
             x, 0, 0,
             0, y, 0,
@@ -250,10 +250,10 @@ public struct Matrix3 : IEquatable<Matrix3>, IFormattable
         );
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Matrix3 MakeRotation(float theta)
+    public Matrix3 MakeRotation(double theta)
     {
-        var nCosTheta = MathF.Cos(theta);
-        var nSinTheta = MathF.Sin(theta);
+        var nCosTheta = Math.Cos(theta);
+        var nSinTheta = Math.Sin(theta);
 
         return Set(
             nCosTheta, -nSinTheta, 0,
@@ -263,7 +263,7 @@ public struct Matrix3 : IEquatable<Matrix3>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Matrix3 MakeTranslation(float x, float y) =>
+    public Matrix3 MakeTranslation(double x, double y) =>
         Set(
             1, 0, x,
             0, 1, y,
@@ -271,7 +271,7 @@ public struct Matrix3 : IEquatable<Matrix3>, IFormattable
         );
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Matrix3 MakeShear(float x, float y) =>
+    public Matrix3 MakeShear(double x, double y) =>
         Set(
             1, y, 0,
             x, 1, 0,
@@ -279,16 +279,16 @@ public struct Matrix3 : IEquatable<Matrix3>, IFormattable
         );
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Matrix3 Scale(float x, float y) => Premultiply(new Matrix3().MakeScale(x, y));
+    public Matrix3 Scale(double x, double y) => Premultiply(new Matrix3().MakeScale(x, y));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Matrix3 Rotate(float theta) => Premultiply(new Matrix3().MakeRotation(theta));
+    public Matrix3 Rotate(double theta) => Premultiply(new Matrix3().MakeRotation(theta));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Matrix3 Translate(float x, float y) => Premultiply(new Matrix3().MakeTranslation(x, y));
+    public Matrix3 Translate(double x, double y) => Premultiply(new Matrix3().MakeTranslation(x, y));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Matrix3 Shear(float x, float y) => Premultiply(new Matrix3().MakeShear(x, y));
+    public Matrix3 Shear(double x, double y) => Premultiply(new Matrix3().MakeShear(x, y));
 
     public bool Equals(Matrix3 other) => Elements.SequenceEqual(other.Elements);
 

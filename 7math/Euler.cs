@@ -6,14 +6,14 @@ namespace _7math;
 
 public struct Euler : IEquatable<Euler>, IFormattable
 {
-    public float X { get; set; }
-    public float Y { get; set; }
-    public float Z { get; set; }
+    public double X { get; set; }
+    public double Y { get; set; }
+    public double Z { get; set; }
     public AxisOrder Order { get; set; }
 
-    private static readonly float _oneMinusEpsilon = 1 - float.Epsilon;
+    private static readonly double _oneMinusEpsilon = 1 - double.Epsilon;
 
-    public Euler(float x = 0, float y = 0, float z = 0, AxisOrder order = AxisOrder.ZYX)
+    public Euler(double x = 0, double y = 0, double z = 0, AxisOrder order = AxisOrder.ZYX)
     {
         X = x;
         Y = y;
@@ -35,7 +35,7 @@ public struct Euler : IEquatable<Euler>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Euler Set(float x = 0, float y = 0, float z = 0, AxisOrder order = AxisOrder.ZYX)
+    public Euler Set(double x = 0, double y = 0, double z = 0, AxisOrder order = AxisOrder.ZYX)
     {
         X = x;
         Y = y;
@@ -66,85 +66,85 @@ public struct Euler : IEquatable<Euler>, IFormattable
         switch (axisOrder)
         {
             case AxisOrder.XYZ:
-                Y = MathF.Asin(Helpers.Clamp(n13, -1, 1));
-                if (MathF.Abs(n13) < _oneMinusEpsilon)
+                Y = Math.Asin(Helpers.Clamp(n13, -1, 1));
+                if (Math.Abs(n13) < _oneMinusEpsilon)
                 {
-                    X = MathF.Atan2(-n23, n33);
-                    Z = MathF.Atan2(-n12, n11);
+                    X = Math.Atan2(-n23, n33);
+                    Z = Math.Atan2(-n12, n11);
                 }
                 else
                 {
-                    X = MathF.Atan2(n32, n22);
+                    X = Math.Atan2(n32, n22);
                     Z = 0;
                 }
 
                 break;
             case AxisOrder.YXZ:
-                X = MathF.Asin(-Helpers.Clamp(n23, -1, 1));
-                if (MathF.Abs(n23) < _oneMinusEpsilon)
+                X = Math.Asin(-Helpers.Clamp(n23, -1, 1));
+                if (Math.Abs(n23) < _oneMinusEpsilon)
                 {
-                    Y = MathF.Atan2(n13, n33);
-                    Z = MathF.Atan2(n21, n22);
+                    Y = Math.Atan2(n13, n33);
+                    Z = Math.Atan2(n21, n22);
                 }
                 else
                 {
-                    Y = MathF.Atan2(-n31, n11);
+                    Y = Math.Atan2(-n31, n11);
                     Z = 0;
                 }
 
                 break;
             case AxisOrder.ZXY:
-                X = MathF.Asin(Helpers.Clamp(n32, -1, 1));
-                if (MathF.Abs(n32) < _oneMinusEpsilon)
+                X = Math.Asin(Helpers.Clamp(n32, -1, 1));
+                if (Math.Abs(n32) < _oneMinusEpsilon)
                 {
-                    Y = MathF.Atan2(-n31, n33);
-                    Z = MathF.Atan2(-n12, n22);
+                    Y = Math.Atan2(-n31, n33);
+                    Z = Math.Atan2(-n12, n22);
                 }
                 else
                 {
                     Y = 0;
-                    Z = MathF.Atan2(n21, n11);
+                    Z = Math.Atan2(n21, n11);
                 }
 
                 break;
             case AxisOrder.ZYX:
-                Y = MathF.Asin(-Helpers.Clamp(n31, -1, 1));
-                if (MathF.Abs(n31) < _oneMinusEpsilon)
+                Y = Math.Asin(-Helpers.Clamp(n31, -1, 1));
+                if (Math.Abs(n31) < _oneMinusEpsilon)
                 {
-                    X = MathF.Atan2(n32, n33);
-                    Z = MathF.Atan2(n21, n22);
+                    X = Math.Atan2(n32, n33);
+                    Z = Math.Atan2(n21, n22);
                 }
                 else
                 {
                     X = 0;
-                    Z = MathF.Atan2(-n12, n22);
+                    Z = Math.Atan2(-n12, n22);
                 }
 
                 break;
             case AxisOrder.YZX:
-                Z = MathF.Asin(Helpers.Clamp(n21, -1, 1));
-                if (MathF.Abs(n21) < _oneMinusEpsilon)
+                Z = Math.Asin(Helpers.Clamp(n21, -1, 1));
+                if (Math.Abs(n21) < _oneMinusEpsilon)
                 {
-                    X = MathF.Atan2(-n23, n22);
-                    Y = MathF.Atan2(-n31, n11);
+                    X = Math.Atan2(-n23, n22);
+                    Y = Math.Atan2(-n31, n11);
                 }
                 else
                 {
                     X = 0;
-                    Y = MathF.Atan2(n13, n33);
+                    Y = Math.Atan2(n13, n33);
                 }
 
                 break;
             case AxisOrder.XZY:
-                Z = MathF.Asin(-Helpers.Clamp(n12, -1, 1));
-                if (MathF.Abs(n12) < _oneMinusEpsilon)
+                Z = Math.Asin(-Helpers.Clamp(n12, -1, 1));
+                if (Math.Abs(n12) < _oneMinusEpsilon)
                 {
-                    X = MathF.Atan2(n32, n22);
-                    Y = MathF.Atan2(n13, n11);
+                    X = Math.Atan2(n32, n22);
+                    Y = Math.Atan2(n13, n11);
                 }
                 else
                 {
-                    X = MathF.Atan2(-n23, n33);
+                    X = Math.Atan2(-n23, n33);
                     Y = 0;
                 }
 

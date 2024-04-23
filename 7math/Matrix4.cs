@@ -6,10 +6,10 @@ namespace _7math;
 
 public struct Matrix4 : IEquatable<Matrix4>, IFormattable
 {
-    public float[] Elements { get; set; }
+    public double[] Elements { get; set; }
 
     public Matrix4() =>
-        Elements = new float[]
+        Elements = new double[]
         {
             1, 0, 0, 0,
             0, 1, 0, 0,
@@ -19,22 +19,22 @@ public struct Matrix4 : IEquatable<Matrix4>, IFormattable
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Matrix4 Set(
-        float n11 = 0,
-        float n12 = 0,
-        float n13 = 0,
-        float n14 = 0,
-        float n21 = 0,
-        float n22 = 0,
-        float n23 = 0,
-        float n24 = 0,
-        float n31 = 0,
-        float n32 = 0,
-        float n33 = 0,
-        float n34 = 0,
-        float n41 = 0,
-        float n42 = 0,
-        float n43 = 0,
-        float n44 = 0
+        double n11 = 0,
+        double n12 = 0,
+        double n13 = 0,
+        double n14 = 0,
+        double n21 = 0,
+        double n22 = 0,
+        double n23 = 0,
+        double n24 = 0,
+        double n31 = 0,
+        double n32 = 0,
+        double n33 = 0,
+        double n34 = 0,
+        double n41 = 0,
+        double n42 = 0,
+        double n43 = 0,
+        double n44 = 0
     )
     {
         Elements[0] = n11;
@@ -112,7 +112,7 @@ public struct Matrix4 : IEquatable<Matrix4>, IFormattable
     public Matrix4 Copy(Matrix4 mat4) => SetFromArray(mat4.Elements);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Matrix4 SetFromArray(float[] arr, int offset = 0)
+    public Matrix4 SetFromArray(double[] arr, int offset = 0)
     {
         for (var i = 0; i < 15; i++) Elements[i] = arr[i + offset];
 
@@ -172,7 +172,7 @@ public struct Matrix4 : IEquatable<Matrix4>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public float Determinant()
+    public double Determinant()
     {
         var n11 = Elements[0];
         var n12 = Elements[4];
@@ -281,13 +281,13 @@ public struct Matrix4 : IEquatable<Matrix4>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public float MaxScaleOnAxis()
+    public double MaxScaleOnAxis()
     {
         var scaleXSquared = Elements[0] * Elements[0] + Elements[1] * Elements[1] + Elements[2] * Elements[2];
         var scaleYSquared = Elements[4] * Elements[4] + Elements[5] * Elements[5] + Elements[6] * Elements[6];
         var scaleZSquared = Elements[8] * Elements[8] + Elements[9] * Elements[9] + Elements[10] * Elements[10];
 
-        return MathF.Sqrt(MathF.Max(scaleXSquared, MathF.Max(scaleYSquared, scaleZSquared)));
+        return Math.Sqrt(Math.Max(scaleXSquared, Math.Max(scaleYSquared, scaleZSquared)));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -311,10 +311,10 @@ public struct Matrix4 : IEquatable<Matrix4>, IFormattable
 
         if (vec3X.LengthSquared() == 0)
         {
-            if (MathF.Abs(up.Z) == 1)
-                vec3Z.X += float.Epsilon;
+            if (Math.Abs(up.Z) == 1)
+                vec3Z.X += double.Epsilon;
             else
-                vec3Z.Z += float.Epsilon;
+                vec3Z.Z += double.Epsilon;
         }
 
         vec3X.Normalize();
@@ -334,10 +334,10 @@ public struct Matrix4 : IEquatable<Matrix4>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Matrix4 MakeRotationFromAxisAngle(Vector3 vec3, float theta)
+    public Matrix4 MakeRotationFromAxisAngle(Vector3 vec3, double theta)
     {
-        var nCosTheta = MathF.Cos(theta);
-        var nSinTheta = MathF.Sin(theta);
+        var nCosTheta = Math.Cos(theta);
+        var nSinTheta = Math.Sin(theta);
         var nT = 1 - nCosTheta;
         var nX = vec3.X;
         var nY = vec3.Y;
@@ -363,7 +363,7 @@ public struct Matrix4 : IEquatable<Matrix4>, IFormattable
         );
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Matrix4 MakePerspective(float left, float right, float top, float bottom, float near, float far)
+    public Matrix4 MakePerspective(double left, double right, double top, double bottom, double near, double far)
     {
         var nW = right - left;
         var nH = top - bottom;
@@ -378,7 +378,7 @@ public struct Matrix4 : IEquatable<Matrix4>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Matrix4 MakeOrthographic(float left, float right, float top, float bottom, float near, float far)
+    public Matrix4 MakeOrthographic(double left, double right, double top, double bottom, double near, double far)
     {
         var nW = right - left;
         var nH = top - bottom;
@@ -399,12 +399,12 @@ public struct Matrix4 : IEquatable<Matrix4>, IFormattable
         var nY = eul.Y;
         var nZ = eul.Z;
         var order = eul.Order;
-        var nCosX = MathF.Cos(nX);
-        var nCosY = MathF.Cos(nY);
-        var nCosZ = MathF.Cos(nZ);
-        var nSinX = MathF.Sin(nX);
-        var nSinY = MathF.Sin(nY);
-        var nSinZ = MathF.Sin(nZ);
+        var nCosX = Math.Cos(nX);
+        var nCosY = Math.Cos(nY);
+        var nCosZ = Math.Cos(nZ);
+        var nSinX = Math.Sin(nX);
+        var nSinY = Math.Sin(nY);
+        var nSinZ = Math.Sin(nZ);
 
         switch (order)
         {
@@ -521,10 +521,10 @@ public struct Matrix4 : IEquatable<Matrix4>, IFormattable
     public Matrix4 MakeRotationFromQuaternion(Quaternion quat) => Compose(Vector3.Zero, quat, Vector3.One);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Matrix4 MakeRotationX(float theta)
+    public Matrix4 MakeRotationX(double theta)
     {
-        var nCosTheta = MathF.Cos(theta);
-        var nSinTheta = MathF.Sin(theta);
+        var nCosTheta = Math.Cos(theta);
+        var nSinTheta = Math.Sin(theta);
 
         return Set(
             1, 0, 0, 0,
@@ -535,10 +535,10 @@ public struct Matrix4 : IEquatable<Matrix4>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Matrix4 MakeRotationY(float theta)
+    public Matrix4 MakeRotationY(double theta)
     {
-        var nCosTheta = MathF.Cos(theta);
-        var nSinTheta = MathF.Sin(theta);
+        var nCosTheta = Math.Cos(theta);
+        var nSinTheta = Math.Sin(theta);
 
         return Set(
             nCosTheta, 0, nSinTheta, 0,
@@ -549,10 +549,10 @@ public struct Matrix4 : IEquatable<Matrix4>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Matrix4 MakeRotationZ(float theta)
+    public Matrix4 MakeRotationZ(double theta)
     {
-        var nCosTheta = MathF.Cos(theta);
-        var nSinTheta = MathF.Sin(theta);
+        var nCosTheta = Math.Cos(theta);
+        var nSinTheta = Math.Sin(theta);
 
         return Set(
             nCosTheta, -nSinTheta, 0, 0,
@@ -646,7 +646,7 @@ public struct Matrix4 : IEquatable<Matrix4>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Matrix4 MultiplyScalar(float scalar)
+    public Matrix4 MultiplyScalar(double scalar)
     {
         Elements[0] *= scalar;
         Elements[4] *= scalar;
@@ -725,13 +725,13 @@ public struct Matrix4 : IEquatable<Matrix4>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Matrix4 RotateX(float theta) => Premultiply(new Matrix4().MakeRotationX(theta));
+    public Matrix4 RotateX(double theta) => Premultiply(new Matrix4().MakeRotationX(theta));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Matrix4 RotateY(float theta) => Premultiply(new Matrix4().MakeRotationY(theta));
+    public Matrix4 RotateY(double theta) => Premultiply(new Matrix4().MakeRotationY(theta));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Matrix4 RotateZ(float theta) => Premultiply(new Matrix4().MakeRotationZ(theta));
+    public Matrix4 RotateZ(double theta) => Premultiply(new Matrix4().MakeRotationZ(theta));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Matrix4 Scale(Vector3 vec3) => Premultiply(new Matrix4().MakeScale(vec3));
@@ -762,7 +762,7 @@ public struct Matrix4 : IEquatable<Matrix4>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public float[] ToArray() => (float[])Elements.Clone();
+    public double[] ToArray() => (double[])Elements.Clone();
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Matrix4 Transpose()

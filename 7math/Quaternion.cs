@@ -6,12 +6,12 @@ namespace _7math;
 
 public struct Quaternion : IEquatable<Quaternion>, IFormattable
 {
-    public float X { get; set; }
-    public float Y { get; set; }
-    public float Z { get; set; }
-    public float W { get; set; }
+    public double X { get; set; }
+    public double Y { get; set; }
+    public double Z { get; set; }
+    public double W { get; set; }
 
-    public Quaternion(float x = 0, float y = 0, float z = 0, float w = 0)
+    public Quaternion(double x = 0, double y = 0, double z = 0, double w = 0)
     {
         X = x;
         Y = y;
@@ -42,7 +42,7 @@ public struct Quaternion : IEquatable<Quaternion>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Quaternion Set(float x = 0, float y = 0, float z = 0, float w = 0)
+    public Quaternion Set(double x = 0, double y = 0, double z = 0, double w = 0)
     {
         X = x;
         Y = y;
@@ -56,7 +56,7 @@ public struct Quaternion : IEquatable<Quaternion>, IFormattable
     public Quaternion SetIdentity() => Copy(UnitW);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public float AngleTo(Quaternion quat) => 2 * MathF.Acos(MathF.Abs(Helpers.Clamp(Dot(quat), -1, 1)));
+    public double AngleTo(Quaternion quat) => 2 * Math.Acos(Math.Abs(Helpers.Clamp(Dot(quat), -1, 1)));
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Quaternion Conjugate()
@@ -69,10 +69,10 @@ public struct Quaternion : IEquatable<Quaternion>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public float Dot(Quaternion quat) => X * quat.X + Y * quat.Y + Z * quat.Z + W * quat.W;
+    public double Dot(Quaternion quat) => X * quat.X + Y * quat.Y + Z * quat.Z + W * quat.W;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Quaternion SetFromArray(float[] arr, int offset = 0)
+    public Quaternion SetFromArray(double[] arr, int offset = 0)
     {
         X = arr[offset];
         Y = arr[offset + 1];
@@ -83,10 +83,10 @@ public struct Quaternion : IEquatable<Quaternion>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public float Length() => MathF.Sqrt(LengthSquared());
+    public double Length() => Math.Sqrt(LengthSquared());
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public float LengthSquared() => Dot(this);
+    public double LengthSquared() => Dot(this);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Quaternion Normalize()
@@ -150,15 +150,15 @@ public struct Quaternion : IEquatable<Quaternion>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Quaternion RotateTowards(Quaternion quat, float theta)
+    public Quaternion RotateTowards(Quaternion quat, double theta)
     {
         var angle = AngleTo(quat);
 
-        return angle == 0 ? this : Slerp(quat, MathF.Min(1, theta / angle));
+        return angle == 0 ? this : Slerp(quat, Math.Min(1, theta / angle));
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Quaternion Slerp(Quaternion quat, float alpha)
+    public Quaternion Slerp(Quaternion quat, double alpha)
     {
         var x = X;
         var y = Y;
@@ -180,7 +180,7 @@ public struct Quaternion : IEquatable<Quaternion>, IFormattable
 
         var sqrSinHalfTheta = 1 - cosHalfTheta * cosHalfTheta;
 
-        if (sqrSinHalfTheta <= float.Epsilon)
+        if (sqrSinHalfTheta <= double.Epsilon)
         {
             var invAlpha = 1 - alpha;
             X = invAlpha * x + alpha * X;
@@ -191,10 +191,10 @@ public struct Quaternion : IEquatable<Quaternion>, IFormattable
             return Normalize();
         }
 
-        var sinHalfTheta = MathF.Sqrt(sqrSinHalfTheta);
-        var halfTheta = MathF.Atan2(sinHalfTheta, cosHalfTheta);
-        var a = MathF.Sin((1 - alpha) * halfTheta) / sinHalfTheta;
-        var b = MathF.Sin(alpha * halfTheta) / sinHalfTheta;
+        var sinHalfTheta = Math.Sqrt(sqrSinHalfTheta);
+        var halfTheta = Math.Atan2(sinHalfTheta, cosHalfTheta);
+        var a = Math.Sin((1 - alpha) * halfTheta) / sinHalfTheta;
+        var b = Math.Sin(alpha * halfTheta) / sinHalfTheta;
 
         X = x * a + X * b;
         Y = y * a + Y * b;
@@ -205,14 +205,14 @@ public struct Quaternion : IEquatable<Quaternion>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Quaternion SetFromAxisAngle(Vector3 vec3, float theta)
+    public Quaternion SetFromAxisAngle(Vector3 vec3, double theta)
     {
         var halfTheta = theta / 2;
-        var sinHalfTheta = MathF.Sin(halfTheta);
+        var sinHalfTheta = Math.Sin(halfTheta);
         X = vec3.X * sinHalfTheta;
         Y = vec3.Y * sinHalfTheta;
         Z = vec3.Z * sinHalfTheta;
-        W = MathF.Cos(halfTheta);
+        W = Math.Cos(halfTheta);
 
         return this;
     }
@@ -220,12 +220,12 @@ public struct Quaternion : IEquatable<Quaternion>, IFormattable
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public Quaternion SetFromEuler(Euler eul)
     {
-        var cosX = MathF.Cos(eul.X / 2);
-        var cosY = MathF.Cos(eul.Y / 2);
-        var cosZ = MathF.Cos(eul.Z / 2);
-        var sinX = MathF.Sin(eul.X / 2);
-        var sinY = MathF.Sin(eul.Y / 2);
-        var sinZ = MathF.Sin(eul.Z / 2);
+        var cosX = Math.Cos(eul.X / 2);
+        var cosY = Math.Cos(eul.Y / 2);
+        var cosZ = Math.Cos(eul.Z / 2);
+        var sinX = Math.Sin(eul.X / 2);
+        var sinY = Math.Sin(eul.Y / 2);
+        var sinZ = Math.Sin(eul.Z / 2);
 
         switch (eul.Order)
         {
@@ -289,7 +289,7 @@ public struct Quaternion : IEquatable<Quaternion>, IFormattable
 
         if (trace > 0)
         {
-            var multiplier = 0.5f / MathF.Sqrt(trace + 1);
+            var multiplier = 0.5f / Math.Sqrt(trace + 1);
             X = (n32 - n23) * multiplier;
             Y = (n13 - n32) * multiplier;
             Z = (n21 - n12) * multiplier;
@@ -297,7 +297,7 @@ public struct Quaternion : IEquatable<Quaternion>, IFormattable
         }
         else if (n11 > n22 && n11 > n33)
         {
-            var multiplier = 2 * MathF.Sqrt(1 + n11 - n22 - n33);
+            var multiplier = 2 * Math.Sqrt(1 + n11 - n22 - n33);
             X = 0.25f * multiplier;
             Y = (n12 + n21) / multiplier;
             Z = (n13 + n32) / multiplier;
@@ -305,7 +305,7 @@ public struct Quaternion : IEquatable<Quaternion>, IFormattable
         }
         else if (n22 > n33)
         {
-            var multiplier = 2 * MathF.Sqrt(1 + n22 - n11 - n33);
+            var multiplier = 2 * Math.Sqrt(1 + n22 - n11 - n33);
             X = (n12 + n21) / multiplier;
             Y = 0.25f * multiplier;
             Z = (n23 + n32) / multiplier;
@@ -313,7 +313,7 @@ public struct Quaternion : IEquatable<Quaternion>, IFormattable
         }
         else
         {
-            var multiplier = 2 * MathF.Sqrt(1 + n33 - n11 - n22);
+            var multiplier = 2 * Math.Sqrt(1 + n33 - n11 - n22);
             X = (n13 + n31) / multiplier;
             Y = (n23 + n32) / multiplier;
             Z = 0.25f * multiplier;
@@ -328,9 +328,9 @@ public struct Quaternion : IEquatable<Quaternion>, IFormattable
     {
         var r = vec3From.Dot(vec3To) + 1;
 
-        if (r < float.Epsilon)
+        if (r < double.Epsilon)
         {
-            if (MathF.Abs(vec3From.X) > MathF.Abs(vec3From.Z))
+            if (Math.Abs(vec3From.X) > Math.Abs(vec3From.Z))
             {
                 X = -vec3From.Y;
                 Y = vec3From.X;
@@ -357,7 +357,7 @@ public struct Quaternion : IEquatable<Quaternion>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public float[] ToArray() => new[] { X, Y, Z, W };
+    public double[] ToArray() => new[] { X, Y, Z, W };
 
     public bool Equals(Quaternion other) => X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z) && W.Equals(other.W);
 

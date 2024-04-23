@@ -47,8 +47,8 @@ public struct Triangle : IEquatable<Triangle>, IFormattable
         var vec3Cache2 = new Vector3();
         var vec3Cache3 = new Vector3();
 
-        float t1;
-        float t2;
+        double t1;
+        double t2;
 
         var vec3ab = v2.Clone().Subtract(v1);
         var vec3ac = v3.Clone().Subtract(v1);
@@ -115,7 +115,7 @@ public struct Triangle : IEquatable<Triangle>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public float Area() =>
+    public double Area() =>
         new Vector3().Copy(v3).Subtract(v2).Cross(new Vector3().Copy(v1).Subtract(v2)).Length() * .5f;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -153,7 +153,7 @@ public struct Triangle : IEquatable<Triangle>, IFormattable
         var vec3 = v3.Clone().Subtract(v2).Cross(v1.Clone().Subtract(v2));
 
         var lengthSquared = vec3.LengthSquared();
-        return lengthSquared > 0 ? vec3.MultiplyScalar(1 / MathF.Sqrt(lengthSquared)) : Vector3.Zero;
+        return lengthSquared > 0 ? vec3.MultiplyScalar(1 / Math.Sqrt(lengthSquared)) : Vector3.Zero;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

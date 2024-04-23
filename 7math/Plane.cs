@@ -7,9 +7,9 @@ namespace _7math;
 public struct Plane : IEquatable<Plane>, IFormattable
 {
     public Vector3 Normal { get; set; }
-    public float Constant { get; set; }
+    public double Constant { get; set; }
 
-    public Plane(Vector3? normal = null, float constant = 0)
+    public Plane(Vector3? normal = null, double constant = 0)
     {
         Normal = normal ?? Vector3.UnitX;
         Constant = constant;
@@ -28,7 +28,7 @@ public struct Plane : IEquatable<Plane>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public Plane Set(Vector3? normal = null, float constant = 0)
+    public Plane Set(Vector3? normal = null, double constant = 0)
     {
         Normal = normal ?? Vector3.UnitX;
         Constant = constant;
@@ -72,10 +72,10 @@ public struct Plane : IEquatable<Plane>, IFormattable
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public float DistanceToPoint(Vector3 vec3) =>
+    public double DistanceToPoint(Vector3 vec3) =>
         Normal.Dot(vec3) + Constant;
 
-    public float DistanceToSphere(Sphere sphere)
+    public double DistanceToSphere(Sphere sphere)
     {
         throw new NotImplementedException();
     }

@@ -16,7 +16,7 @@ Contains: Vector3, Quaternion, Matrix3, Matrix4, Euler, Plane, Triangle</Descrip
         <RepositoryType>git</RepositoryType>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <Version>1.0.4</Version>
+        <Version>1.1</Version>
         <TargetFramework>netstandard2.1</TargetFramework>
         <LangVersion>default</LangVersion>
     </PropertyGroup>
